@@ -1,0 +1,85 @@
+## ansible task install nginx
+
+---
+- name: install ngix
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: install nginx
+      yum:
+        name: nginx
+	state: present
+
+
+
+## cretae s3 via terraform
+
+provider "aws" {
+  region = "ap-south-1"
+}
+
+resource "aws_instance"  "sumit-ec20" {
+  ami             = 12345qwert
+  instance_type   = "c5.2xlarge"
+
+  tags = {
+    name = sumit
+  }
+}
+
+
+## kubernetes create nginx pod
+
+apiVersion: v1
+kind: pod
+metadata:
+  name: sumot-pod
+spec:
+  containers:
+    - name: web
+      image: nginx:latest
+      port:
+        - containerPort: 80
+
+	## shell script - print date ,hostnamr=e
+
+	#!/bin/bash
+	echo "date: $(date)"
+	echo "hostsname: $(hostname)"
+
+
+
+
+## jinkins checkout stage
+
+pipeline {
+    agent any
+    stages {
+        stage('checkout) {
+	    steps {
+	        sh 'ls-ls'
+	    }
+	}
+    }
+}
+
+
+## gi lab ci checkout git 
+
+stages: 
+  - checkout
+
+git-checkout:
+  stages
+    - checkout
+
+
+  git-checkout:
+    stage: checkout
+    scriot
+      - git clone -
+      - cd sample-java-app
+      - ls-la
+
+
