@@ -1,0 +1,136 @@
+## ansible install and enable nginx
+
+---
+- name: intall nginx and start nginx on su
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: install nginx
+      yum:
+        name: nginx
+	state: present
+    
+    - name: enable nginx
+      sevice:
+        name:nginx
+	state: started
+	enables: yes
+
+
+
+
+## terraform ec2 with tags
+
+provider "aws" {
+  region = "us-east-1" 
+}
+
+respurce "aws_ec2_instance" "sumit" {
+  ami    = 
+  instance_type = "r5.2xlarge"
+
+  tags = {
+    name   = "sumit"
+    enviromnent = "tarimning"
+  }
+}
+
+
+## kubernetes deployment with 2 replicas
+
+api
+version: app/v1
+kind: deployment
+metadata:
+  name: sumit
+spc:
+  replicas: 2
+  selectors:
+    matchlabels:
+      app: pathnex-app
+  template:
+    metadata:
+      labels:
+        app: pathnex-app
+    spec:
+      containers:
+        - name: app
+	  image: nginx
+	  ports:
+	    - containerport: 80
+
+
+
+
+
+## shell script
+
+#!/bin/bash
+df -h
+
+
+## jenkins maven build
+
+
+pipeline {
+    agent any
+    tools {
+        maven 'maven-3.8.1'
+	jdk 'jdk 17'
+    }
+    stages {
+        stage('checkout') {
+	    stage {
+	        steps {
+		    git url
+		}
+	    }
+	}
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+## git lab ci maven build
+
+stages:
+  - build
+  - test
+  - deploy
+
+
+maven-build:
+  stage: build
+  image:
+  script:
+    - git clone
+    - cd sample-java-app
+    - mvn clean compile
+
+
+maven- test:
+  stage: test
+  image: maven:3.8.1-jdk-17
+  script:
+    - cd sample-java-app
+    - mvn clean compile
+
+
+
+
+
+
+
+
+
+
+
