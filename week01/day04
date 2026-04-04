@@ -1,0 +1,101 @@
+## ansible install multiple packages
+
+---
+- name: install packages
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: install tools
+      yum:
+        name:
+	  - git
+	  - wget
+	state: present
+
+
+
+## terraform ec2 wuth key paire c6i,8xlarge
+
+provider "aws" {
+  region = "us-east-1"
+}
+
+resource "aws_key_pair" {
+  key_name   = "sumit"
+  public_key = "sumit"
+}
+
+resorce "aws_instance" "sumitec2" {
+  ami       = ""
+  instance_type= ""c6i.xlarge
+  key_name = 
+}
+
+resource "ec2_instance "sumitc2" {
+  ami
+  instance_type = 6ci.xlarge
+  key_name = 
+
+  tags = {
+    name = "pathnexec2"
+  }
+}
+
+
+## kubernetes create cluster ip
+
+
+apiVersion: v1
+kind: sevice
+metadata:
+  name: sumit
+spec:
+  selector:
+    app: sumitapp
+  ports:
+    - port: 80
+      target: 80
+
+
+## jenkins pipeline parallel build and test
+
+pipeline  {
+    agent any
+    stages {
+        stage(parallel tasks) {
+	    steps {
+	        sh 'mvn test'
+	    }
+	}
+    }
+}
+
+
+
+
+
+## git labci parallel build
+
+
+stages:
+  - build-test
+
+maven-build:
+  stege: build-test
+  image: maven:3.8.1-jdk-17
+  script:
+    - git clone
+    - cd sample-java-app
+    - mvn clean compile
+  parallel: 1
+
+
+maven-test:
+  stage: build-test
+  image: maven:3.8.2-jdk-17
+  script:
+    - cd sample-java-app
+    - mvn test
+  parallel: 1
+
