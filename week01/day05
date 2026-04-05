@@ -1,0 +1,89 @@
+## ansible handlers to restarate nginx
+
+--- 
+- name: manage nginx
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: update: nginx
+      copy:
+        src: index.html
+	dest: 
+	notify: restarte nginx
+
+
+handlers: 
+  - name: restart nginx
+  state: started
+
+
+## terraform ec2 instance c6i.xlarge
+
+resource "aws-instance0" "sumit" {
+  ami
+  instance_type = "c6i.xlarge"
+
+  user_data = <<EQF
+#!/bin/bash
+yum install -y httpd
+systmctl start httpd
+EQF
+
+  tags = {
+    name = "sumit"
+  }
+}
+
+## kubernetes resource limit - 
+
+apiVersion: v1
+kind: pod
+metadata:
+  name: sumit
+spec:
+  containers:
+    - name: app
+      image: nginx
+      resources:
+        limits: 
+	  memory: "256MI"
+	  cpu: 500
+
+
+
+jenkins use environment veriable
+
+pipeline {
+    agent any 
+    environment {
+        INSTITUTE_NAME = "sumit"
+    }
+    stages {
+        stage(print) {
+	    steps {
+	        sh 'echo "welcome to $INSTITUTE_NAME sumit"
+	    }
+	}
+    }
+}
+
+## git lab ci use enviromrent veriable
+
+
+
+
+stages:
+  - build
+
+variables:
+  INSTITUTE_NAME: sumit
+
+build:
+  stage: build
+  image: maven:3.8.1-jdk-17
+  script:
+    - git clone
+    - cd sample-java-app
+    - echo ""
+    - mvn clean pakage
