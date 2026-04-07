@@ -1,0 +1,51 @@
+## ansible broken 
+- name install nginx
+ hosts all
+ become yes
+ tasks:
+   - name: install nginx
+   state present
+
+## terraform 
+
+resource "aws_instance" "broken" {
+  ami  = "amiqwer"
+  instance_type = c6i.xlarge
+tags {
+  name = "broken"
+}
+}
+
+
+## kubernetes broken
+apiVersion: v1
+kind pod
+metadata:
+  name: sumit
+spec:
+  containers:
+    - name app
+      image
+
+
+      ## jenkins 
+
+      pipeline {
+          agent any
+	  stages {
+	      stage(checkout)
+	          steps {
+		      git 
+		  }
+	      }
+	      stage(build) {
+	          steps {
+		      sh
+		      mvn clean
+		   }
+	      }
+	 }
+
+
+
+
