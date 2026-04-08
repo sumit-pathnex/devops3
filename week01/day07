@@ -1,0 +1,41 @@
+## jenkins pipeline parameterized
+
+pipeline {
+    agent any
+    parameters {
+        string(name: 'ENVIRONMENT', defaultValue: 'dev', description: 'Deployment environment')
+    }
+    environment {
+        INSTITUTE_NAME = sumit
+    }
+    stages {
+        stage('checkout') {
+	    steps {
+	        git url:
+	    }
+	}
+	stage('deploy') {
+	    steps {
+	        sh 'echo "deploying to environment"
+            }
+	}
+    }
+}
+
+
+## parameterized git ci
+
+stages:
+  - deploy
+variable:
+  INSTITUTE_NAME:sumit
+  environment: "dev"
+
+
+deploy:
+  stage: deploy
+  image: alpine:latest
+  script:
+    - echo "deploying to environment to dev by sumit"
+
+
