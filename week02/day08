@@ -1,0 +1,138 @@
+## day08
+
+ansible install packages using variable
+
+---
+- name: install packages for pathnex
+  host: all
+  become: yes
+
+  vars:
+    sumit_packages:
+      - tree
+      - unzip
+      - vim
+
+
+
+  tasks:
+    - name: install required packages
+      yum: 
+        name: "{{sumit_package}}"
+	state: present
+
+
+
+##  Terraform create vpc subnet
+
+provider "aws" {
+  region = "ap-south-1"
+}
+
+resources "aws_vpc" "sumit_vpc" {
+  cidr_block = "10.0.0.0/16"
+
+  tags = {
+    name = "sumit_vpc"
+  }
+}
+
+resources "aws_subnet" "pathnexSubnet" {
+  vpc_id        = aws_vpc_id
+  cidr_block    = "10.10.0.0/16
+  map_public_id_on_launch = true 
+
+  tags = {
+  }
+}
+
+
+## kuberentes add liveness and readyness probe
+
+apiVersion: v1
+kind: pod
+metadata:
+  name: pathnex-probe-pod
+apec:
+  containers:
+    - name: web
+      image: nginx
+      livenessProbe:
+        httpGet:
+	  path: /
+	  port: 80
+	initialDeplymentSecond: 5
+      readynessProbe:
+        httpGet:
+	  path: /
+	  port: 80
+	initial delau second: 3
+
+
+
+## shell script loop through list
+
+#!/bin/bash
+
+
+
+## conditional execurtion
+
+pipeline {
+    agent any
+    parameters {
+        string(name: 'ENVIRONMENT, defaultValue: dev, description: deployment environment)
+    }
+    environment {
+        INSTITUTE_NAME "sumit"
+    }
+    stages {
+        stage('checkout') {
+	    steps {
+	        gitbranch:
+            }
+	}
+	stage('build') {
+	    when {
+	        branch 'main'
+	    }
+	    steps {
+	        sh ' mvn clean compile'
+	    }
+	}
+	stege('deploy') {
+	   when {
+	       expression {
+	   }
+	   steps {
+	       sh 
+	   }
+        }
+    }
+}
+
+
+## git lab ci 
+
+stages: 
+  - build
+  - deploy
+
+build:
+  stage: build
+  image maven3.8.1-jdk-17
+  script:
+    - git clone 
+    - cd sample-java-app
+    - mvn clean compile
+  only:
+    - main
+
+deploy:
+  stage: deply
+  image: alpine:latest
+  script:
+    - echo "deploying to"
+  only:
+    variable:
+      - 
