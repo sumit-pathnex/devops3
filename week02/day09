@@ -1,0 +1,92 @@
+## ansible us jinja templates 
+
+---
+- name: deployment foe sumit
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: copy template file
+      src: pathnex.config.j2
+      dest: /etc/sumit.config
+
+
+
+
+## terraform internet gateways
+
+resource "aws_internet_gateway" "sumit" {
+  vpc_id = aws_vpc_id
+
+  tags = {
+    NAME = "sumit"
+  }
+}
+
+
+## kubernetes create config map
+
+apiVersion: v1
+kind: configMap
+metadata:
+  name: pathnex
+data: 
+  APP_MODE = "production"
+  WELCOME_MSG: "hello message"
+
+
+
+
+## shell script check cpu usage
+
+#!/bin/bash
+
+
+LOAD=$(uptime | awk)
+
+
+## jenkins artifacts storage
+
+pipeline {
+    agent any
+    environment {
+        INSTITUTE_NAME = "sumit" 
+    }
+    stages {
+        stage(chehckout) {
+	    steps {
+	        git url:
+	    }
+	}
+	stage(build) {
+	    steps {
+	        sh ' mvn clean package
+            }
+	}
+	stage(archive) {
+	    steps {
+	        archiveartifacts:
+	    }
+	}
+    }
+}
+
+
+
+## git lab ci artifacts
+
+stages:
+  - build
+
+build:
+  stage: build
+  image: maven:3.8.1-jdk-17
+  script:
+    - git clone
+    - cd sample java app
+    - mvn clean pakage
+  artifacts: 
+    path:
+      - target/*.jar
+    expire_in: 1 week
+
