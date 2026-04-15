@@ -1,0 +1,89 @@
+## ansible when condition 
+
+---
+- name: install tool based on os
+  hosta: all
+   become: yes
+
+   tasks:
+     - name: install htop
+       yum:
+         name: htop
+	 state: present
+       when: ansible_facts== "redhat"
+
+## terraform routr table association
+
+
+resources "aws_route_table" "sumit" {
+  vpc_id = aws_vpc_id
+  
+
+  route {
+    cidr_block = "10.0.0.0/16"
+    gateway_id = aws_gate_way_id
+  }
+
+  tags = {
+    name = "sumit"
+  }
+}
+
+
+## kubernetes secrets
+
+
+apiVersion: v1
+kind: pod
+metadata:
+  name: sumit
+type: opaque
+data:
+
+
+
+## 🔹 Jenkins Pipeline — Cache Maven Dependencies
+You will learn how to **reuse dependencies to speed up builds**.
+
+pipeline {
+    agent any
+    environment {
+        INSTITUTE_NAME = "Pathnex"
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                git url: 'https://github.com/Pathnex/sample-java-app.git'
+            }
+        }
+        stage('Build') {
+            steps {
+                sh '''
+                if [ -d ".m2" ]; then
+                    echo "Using cached dependencies"
+                else
+                    mvn clean compile
+                fi
+                '''
+            }
+        }
+    }
+}
+
+## 🔹 GitLab CI — Cache Dependencies
+You will learn how to **cache dependencies in GitLab CI**.
+
+stages:
+  - build
+
+build:
+  stage: build
+  image: maven:3.8.1-jdk-17
+  cache:
+    key: maven-cache
+    paths:
+      - .m2/repository
+  script:
+    - git clone https://github.com/Pathnex/sample-java-app.git
+    - cd sample-java-app
+    - mvn clean compile
