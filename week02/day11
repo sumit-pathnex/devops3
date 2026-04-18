@@ -1,0 +1,100 @@
+## ansible install mariadb
+
+---
+- name: install mariadb
+  hosts: all
+   become: yes
+
+   tasks:
+     - name: install mariadb
+       yum:
+         name: mariadb
+	 state: present
+
+     - name: start mariadb
+       sevice: 
+         name: mariadb
+	 state: started
+	 enabked: yes
+
+
+
+## terraform output (r5.2xlarge)
+
+
+resoueces "aws_instance" "sumit" {
+  ami         = "ami-qwertyuasdfgh"
+  instance_type  = "r5.2xlarge"
+
+
+  tags = {
+    Name= "sumit"
+  }
+}
+
+
+## kubernetes 
+
+apiVersion: v1
+kind: pod
+metadata: 
+  name: sumit
+spec:
+  containers:
+    - name: main
+      image: nginx
+    - name: sidecar
+      image: busybox
+      command: [sh]
+
+
+## shell script 
+#!/bin/bash
+
+## jenkins emailnotification
+
+pipeline {
+    agent any 
+    environment {
+        institute_name = "sumit"
+    }
+    stages {
+        stage(checkout)
+	    steps {
+	        git url:
+	    }
+	}
+	stage(build) {
+	    steps {
+	        git url:
+	    }
+	}
+    }
+    post {
+        sucess {
+	    mail to:
+	        subject:
+		body:
+	}
+	failure {
+	    mail to:
+    }
+}
+
+
+
+
+## gitLab ci email notification
+
+stages:
+  - build
+
+build:
+  stage: build
+  image: maven:3.8.1-jdk-17
+  script:
+    - git clone https://github.com/Pathnex/sample-java-app.git
+    - cd sample-java-app
+    - mvn clean package
+  after_script:
+    - echo "Sending notification email to 
