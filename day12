@@ -1,0 +1,107 @@
+## ansible ensure file foer pathnex
+
+---
+- name: create config map
+  hosts: all
+  become: yes
+
+  tasks: 
+    - name: write content
+      copy:
+        dest: /etc/pathnex.conf
+	content:
+	  welcome
+
+
+
+
+## terraform rds
+
+resource "aws_db_instance" "sumit" {
+  allocated_storage   = 20
+  engine              = "mysql"
+  instance_type       = "db.t3.micro"
+  name                = "sumit"
+  username            = "admin"
+  password            = "passward"
+  skip_fina_step      = true
+}
+
+
+## kubernetes rolling update strategy
+
+apiVersion: apps/v1
+kind: deployment
+metadata:
+  name: sumit
+spec:
+  replicas: 3
+  strategy: rollingupdate
+    maxsurge: 1
+    maxvunavailable: 1
+selector:
+  matchlabels:
+    app: roll
+  template:
+    metadata:
+      labels:
+        app: roll
+spec:
+  containers:
+    - name: web
+      image: nginx
+
+
+
+
+
+
+
+## jenkins pipeline multi branch
+
+pipeline {
+    agent any 
+    environment {
+        institute_name = "sumit"
+    }
+    stages {
+        stage(checkout) {
+	    steps {
+	        checkout scm
+	    }
+	}
+	stage('build') {
+	    steps {
+	        sh mvn clean compile
+	    }
+	}
+    }
+}
+
+
+
+## git lab ci brench specific jobs
+
+
+stages:
+  - build
+
+build-main:
+  stage: build
+  image: maven:3.8.2-jdk-17
+  script:
+    - mvn clean compile
+  only:
+    - main
+
+
+  build-dev:
+    stage: build
+    script:
+      - mvn clean compile
+      only:
+        - dev
+
+
+
+
