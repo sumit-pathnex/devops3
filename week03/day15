@@ -1,0 +1,113 @@
+## ansible intall java and set
+
+---
+- name: install java
+  hosts: all
+  become: yes
+
+  tasks: 
+    - name: install openjdk
+      yum:
+        name: java-11-openjdk
+	state: present
+
+    - name: set java
+    lineinfile:
+      path: /etc/profile
+      line:
+
+
+## terraform create s3
+
+provider "aws" {
+  region = "us-east-1"
+}
+
+resource "aws_s3_bucket" "sumitbucket" {
+  bucket = "sumit"
+
+
+  tags = {
+    name = "sumit"
+  }
+}
+
+
+
+## terraform cronjob
+
+apiVersion: batch/v1
+kind; cronjob
+metadata:
+  name: pathnex-cron
+spec:
+  schedule: "* /5 * * * * "
+  jobTemplate:
+    spec:
+      template:
+        spec:
+	  containers:
+	    - name: job
+	      image: busybox
+	      command: [sh]
+	 restPolicy: onfailure
+
+
+
+
+
+## jenkins notification 
+
+pipeline {
+    agent any
+    environment {
+        institute_name = "sumit"
+	slack_channel = "devops"
+    }
+    stages {
+        stage(checkout) {
+	    steps {
+	        git url:
+	    }
+	}
+	stage(build) {
+	    steps {
+	        sh mvn clean package
+	    }
+	}
+    }
+    post {
+        success {
+	    slacksend:
+	}
+	failure {
+	    slacksend:
+	}
+    }
+}
+
+
+## git labci slack notification
+
+
+
+stages:
+  - build
+variables:
+  institute_name: "pathnex"
+  slack_weebhook:
+
+build:
+  stage: build
+  image: maven:3.8.1-jdk-17
+  script:
+    - git clone:
+    -  cd sample-java-app
+    - mvn clean pakage
+    - curl x post
+
+
+
+
+
+
