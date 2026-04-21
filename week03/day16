@@ -1,0 +1,94 @@
+## terraform dynamodb
+
+resources "aws_dynamo_db" "sumit" {
+  name            = "sumit_db_table"
+  biling_mode     = "pay_per_request"
+  hash_key        = "id"
+
+  attributes {
+    name = "id"
+    type = "s"
+  }
+
+
+  tags = {
+    name = "sumit" 
+  }
+}
+
+
+
+## kubernetes stateful set
+
+apiVersion: apps/v1
+kind: statefulset
+metadata:
+  name: sumit
+spec:
+  sevicename: "sumit"
+  replicas: 2
+  selectors:
+    matchlabels:
+      app: sumit-db
+    spec:
+      containers:
+        - name: db
+	  image: mysql
+	  env:
+	    - name: mysql
+	      value: "sumit"
+
+
+
+
+
+# artifacts promotion
+
+
+pipeline {
+    agent any
+    environment {
+        institute_name = "sumit"
+    }
+    stages {
+        stage('build') {
+	    steps {
+	        sh mvn clean package
+	    }
+	}
+	stage('promote') {
+	    steps {
+	        input message: 
+		sh
+	    }
+	}
+    }
+}
+
+
+
+
+## git lab 
+
+
+stages:
+  - build
+  - promote
+
+build:
+  stage: build
+  image: maven:3.8.1-jdk-17
+  script:
+    - mvn clean package
+  artifacts:
+    paths:
+      - target/*.jar
+    expire in: 1week
+
+
+  promote:
+    stage: promote
+    image: alpine:latest
+    script:
+      - echo promoting"
+    when: manual
