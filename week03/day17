@@ -1,0 +1,112 @@
+## ansible create multiple users in loop
+
+
+---
+- name: create users
+  hosts: all
+  become: yes
+
+  vars:
+    users:   
+      - dev1
+      - dev2
+      - dev3
+
+
+  tasks:
+    - name: create users
+      user:
+        name: "{{item}}"
+	state: present
+      loop: "{{users}}"
+
+
+## terraform alb
+
+
+resource "aws_alb" "sumir" {
+  name          = "alb"
+  load_balancer_type = "application"
+  subnet             = "aws_subnet"
+
+  tags = {
+    name = "pathnex-alb"
+  }
+}
+
+
+
+## kubernetes namespace deployment
+
+apiVersion: v1
+kind: namespace
+metadata:
+  name:sumit
+
+---
+apiVersio: apps/v1
+kind: deployment
+metadata:
+  name: sumit
+  namespace: sumit
+spec:
+  replicas: 2
+  selector:
+    matchlabels:
+      spp: sumit
+    template:
+      metadata:
+        labels:
+	  app: pathnex
+	spec:
+	  containers:
+	    - name: app
+	      image: nginx
+
+
+
+
+## shell script
+
+#!/bin/bash
+
+ps aux --sort=-%mem | head -n 6
+
+## jenkins pipeline
+
+pipeline {
+    agent ant
+    parameteres {
+        choice
+    }
+    environment {
+        institute_name = "sumit"
+    }
+    stages {
+        stage(deployment)
+	    steps {
+	        sh { 
+	    }
+	}
+    }
+}
+
+
+
+## gitlab ci
+
+stages: 
+  - deploy
+
+variables:
+  institute_name "sumit"
+  environment: "staging"
+
+deploy:
+  stage: deploy
+  image: maven:3.8.1-jdk-17
+  script:
+    - echo "deploying 
+
+
+    "
