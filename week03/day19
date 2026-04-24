@@ -1,0 +1,95 @@
+## git deploy 
+
+
+## ansible deploy app using girt
+
+---
+ - name: deploy app
+   hosts: all
+   become: yes
+
+   tasks: 
+     - name: install git
+       state: present
+
+     - name: clone repository
+       git:
+         repo:
+	 dest:
+
+
+
+## terraform rds
+
+
+resource "aws_db_instance" "sumit" {
+  allocated_storage = 20
+  engine = "mysql"
+  instance_class = "db.t3.micro"
+  username = 
+  password = 
+  skip_final_snapshot = true
+}
+
+
+## kubernetes 
+
+apiVersion: apps/v1
+kind: deployment
+metadata: 
+  name: pathnex
+spec:
+  replicas 3
+  stategy:
+    type: rollout
+    rillingupdate:
+      maxsurge: 2
+      maxunavailable: 1
+    selector:
+      matchLabels: 
+        app: rollout
+      template:
+        metadata:
+	  labels:
+	    app: rollout
+	  spec:
+	    containers: 
+	      - name: app
+	        image: ngoinx
+
+## jenkins
+
+pipeline {
+    agent any 
+    environment {
+        institute_name = "pathnex"
+    }
+    stages {
+        stage(deploy) {
+	    steps {
+	        input message:
+		sh echo
+	    }
+	}
+    }
+}
+
+
+## git lab 
+
+stages: 
+  - deploy
+
+variables:
+    institue_name
+
+deploy:
+  stage: deploy
+  image: alpine
+  script:
+    - echo
+  when: manual
+
+
+
+	  
