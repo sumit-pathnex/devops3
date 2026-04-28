@@ -1,0 +1,104 @@
+## day 23 ansible add tags to users
+
+---
+ - name: create users 
+   hosts: all
+   become: yes
+
+   tasks:
+     - name: create pathnex user
+       user:
+         ame: devuser
+	 comment: "sumit"
+
+
+
+
+## terraform elastic ips
+
+
+resource "aes_ip" "pathnex" {
+  instance = aws_instance.pathnexec2.id
+
+  tas = {
+    name = "sumiteip"
+  }
+}
+
+## kubernetes hpa
+
+apiVersion: autoscailing/v2
+kind: hpa
+metadata:
+  name: sumit
+spec:
+  scaleTarget: apps/v1
+  kind: deployment
+  name: sumit-deployment
+minReplicas: 2
+maxReplicas: 6
+metrics:
+  - type: resource
+    name: cpu
+    target:
+      type: utilization
+      averageUtilization: 50
+
+## shell script
+
+#!/bin/bash
+
+PID=$(ps aux --sort=%cpu | awk 'NR==2)
+
+echo "killing process: $PID"
+
+
+
+## jenkins build docker image
+
+pipeline {
+    agent any
+    environment {
+        INSTITUTION_NAME = "sumit"
+	team = "devops"
+	env = ""staging" 
+	project = "webApp"
+    }
+    stages {
+        stage(checout) {
+	    steps {
+	        git url:
+	    }
+	}
+	stage(build docker mage) {
+	    steps {
+	        sh '''
+		docker build -t sumit/webapp:${env}-${build_number} \
+		--label "instiyute_name" \
+		--label "team" \
+		--label "project"
+		'''
+	    }
+	}
+    }
+}
+
+
+## gitlab ci build docker image
+
+stages:
+  - docker-build
+
+variables:
+  institute_name: "sumit"
+  team: "devops"
+  env: "staging"
+  project: "webapp"
+
+docker-build:
+  stage: docker-build
+  image: docker:latest
+  services:
+    - docker:dind
+  script:
+    
