@@ -1,0 +1,125 @@
+## ansible template
+
+---
+- name: deploy
+  hosts: all
+  become:
+
+  tasks:
+    - name: create config
+      template:
+        src:
+	dest: /etc/pathnex.com
+
+
+
+## terraform alb
+
+resource "aws_ib_listner" "sumit" {
+  load_balancer_arn = aws.lb
+    port = "80"
+    protocol = "http"
+
+    defaut_action {
+      type = "flexible-responce" 
+      fixed_responce {
+        content_type = text/plain"
+	message_body = "sumit"
+      }
+   }
+}
+
+
+## kubernetes - pv + pvc
+
+apiVersion: v1
+kind: persistencevolume
+metadata:
+  name: sumit
+spec:
+  capacity:
+    storage:  1Gi
+  accessModes:
+    - readwriteonce
+  hostpath:
+    path: /data/pathnex
+
+---
+apiVersion: v1
+kind: pvc
+metadata:
+  name: "sumit"
+spec:
+  accessModes:
+    - readWriteonce
+  resources:
+    storage:  500mi
+
+## shell script
+
+
+#!/bin/bash
+
+
+
+## jenkins pipeline
+
+pipeline {
+    agent any 
+    environment {
+        INSTITUTE_NAME = "sumit"
+	team = "qa"
+	env ="dev"
+    }
+    stages {
+        stage(checkout) {
+	    steps {
+	        git url:
+	    }
+	}
+	stage(unit test) {
+	    steps {
+	        sh mvn test'
+	    }
+	}
+	stage(build)
+	    steps {
+	    sh
+	    }
+	}
+	stage (report) {
+	    steps {
+	      sh 'echo"testcompleted"
+	    }
+	
+	}
+    }
+}
+
+
+## git lab run test
+
+stages:
+  - unit
+  - integration
+
+variables:
+  institute_name: "sumit"
+  team: "dev"
+  env: "dev"
+
+unit test:
+  stage: unit
+  image: maven:3.8.1-jdk-17
+  script:
+    - mvn test
+    - echo "unit test completed"
+
+    integration-test:
+  stage: integration
+  image: maven:3.8.1-jdk-17
+  script:
+    - mvn verify -Dgroup=integration
+    - echo "Integration tests completed for $INSTITUTE_NAME by $TEAM in $ENV"
+
+
