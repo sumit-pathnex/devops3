@@ -1,0 +1,92 @@
+## ansible modified existing line
+
+---
+- name: update ssh for sumit
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: disable root login
+      linefile:
+        path: /etc/ssh/sshd_config
+        regexp: "permit to root login"
+        line: "permit to root login0"
+
+## terraform -ec2 key pair output
+
+resource "aws_key_pair" "sumitkey" {
+      key_name  = "sumit_key"
+      public_key  = file_path
+}
+
+output "sumit_key_name" {
+    value = awskeypair
+}
+
+
+## kubernetes multi container pod
+
+apiVersion: v1
+kind: pod
+metadata:
+  name: sumit
+spec:
+  container:
+    - name: app
+      image: nginx
+    - name: logwriter
+      image: busybox
+      command: [sh]
+
+## jenkins pipeline chache dependencies
+
+pipeline {
+    agent any
+    environment {
+        institute_name = "sumit"
+        team = "devops"
+        env = "staging"
+    }
+    stages {
+        stage(checkout) {
+            steps {
+                git url:
+            }
+        }
+        stage(build) {
+            steps {
+                sh'''
+                if []
+                    echo
+                esle
+                    mvn clean compile
+                fi
+                '''
+            }
+        }
+    }
+}
+
+
+## git lab ci chace dependencies
+
+stages:
+  - build
+
+variables:
+  institute_name: "sumit"
+  team: "devops"
+  env: "staging"
+
+build:
+  stage: build
+  image: maven:3.8.1-jdk-17
+  chache:
+    key: ""
+    path:
+      -
+script:
+  - mvn clean compile
+  - echo "cached dependencies"
+
+  
