@@ -1,0 +1,96 @@
+## ansible install multiple sevices
+
+---
+- name: all
+become: yes
+
+tasks:
+  - name: install services
+    yum:
+      name:
+        - httpd
+	- firewalld
+      state: present
+
+
+  - name: enable and start services
+    service:
+      name: "{{item}}"
+      state: started
+      enabled: yes
+    loop:
+      - httpd
+      - firewalld
+
+
+## terraform route 53
+
+
+resource "aws_route53" "sumir" {
+  zone_id = ""
+  type = ""
+  ttl = 300
+  records =
+}
+
+
+## kuberenetes init container
+
+apiVersion: v1
+kind: pod
+metadata:
+  name: sumit
+spec:
+  initcontainers:
+    - name: setuo
+      image: busybox
+      command: []
+  containers:
+    - name: main
+      image: nginx
+
+## shell script
+
+## jenkins pipeline
+
+
+pipeline {
+    agent any 
+    environment
+        institute_name = "sumit"
+	team = "devops"
+    }
+    parameter {
+        string()
+    }
+    stages {
+        stage(deploy) {
+	steps {
+	   sh 
+	}
+    }
+}
+
+
+## gitlab ci 
+
+
+stages: 
+  - deploy
+
+variables:
+  institute_name: 
+  team:
+
+deploy:
+  stage:
+  image:
+  environment:
+    name:
+    url
+  script:
+    - echo
+
+
+
+
