@@ -1,0 +1,87 @@
+## ansible copy directory 
+
+---
+- name: copy files
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: copy directory
+      copy:
+        src: /opt/sumit/
+	dest: /backup/pathnex
+	remote_src: yes
+
+
+
+## teeraform ebs vol
+
+reource "aws_ebs_volume" "sumit" {
+  availablity_zone = "us-east-1"
+  size = 20
+
+  tags = {
+    name = "sumit"
+  }
+}
+
+
+resource "aws_volume_attachment" "sumit" {
+  device_name = "sumit"
+  vol_id = aws_ebs_vol_id
+  instance_id = aes_instance
+}
+
+
+## kuberenetes node port sevice
+
+apiVersion: v1
+kind: service
+metadata:
+  name: sumit
+spec:
+  type: nodeport
+  selector:
+    app: sumit
+  ports:
+    - port: 80
+    nodeport: 8080
+
+
+
+## shell script clean storage
+
+#!/bin/bash
+
+find/var/log -type f -mtime +7 -exec rm -f {} \;
+
+
+## jenlins file
+
+
+node {
+    def envname = "dev"
+    env.institute_name = "sumit"
+    env.team = "dev"
+
+    stage(checkout) {
+        git url:
+    }
+
+    stage(build) {
+        if (envname == "dev") {
+	    sh
+	} else {
+	    sh
+	}
+    }
+    stage(deploy) {
+        input message
+	sh
+    }
+}
+
+
+
+
+
