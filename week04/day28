@@ -1,0 +1,120 @@
+## terraform multi region kubernetes cluster
+
+
+resource "aws_eks_cluster" "sumit" {
+  name        = "sumit"
+  role_arn    = "iam_roles_eks"
+
+  vpc_config {
+    subnet_id = []
+  }
+
+  depends_on = []
+}
+
+
+
+resource "gcp_cluster" "sumit" {
+  name = 
+  location = "us-central-a"
+  initial_code_count = 3
+  node_config {
+    machine_type = "n1-standard-1"
+  }
+
+}
+
+
+## kubernetes fedarated deployment
+
+
+apiVersion: apps/v1
+kind: deployment
+metadata:
+  name:
+spec:
+  replicas:
+  selectors:
+    matchlabels:
+      app: pathnex
+    template:
+      metadata:
+        labels:
+	  app psumit
+	spec:
+	  containers:
+	    - name: nginx
+	      image: nginx
+	      ports:
+	        - containers:
+
+
+---
+apiVersion: 
+kind: fersdrated deployment
+metadata:
+  name: sumit federated depoyment
+  namespace: default
+spec:
+  template:
+    spec:
+      template:
+        spec:
+	  replics:
+	  selectors:
+	    matchlabels:
+	      app: sumit-app
+	    template:
+	      metadata:
+	        labels:
+		  app: sumit
+	      spec:
+	        containers:
+		  - name: nginx
+		    image: nginx
+		    ports:
+		      - containers: 80
+
+
+
+
+## jenkinsfile multi cluster deployment
+
+
+pipeline {
+    agent any
+    stages {
+        stage(deployment) {
+	    steps {
+	        script {
+		    sh
+		}
+            }
+	}
+	stage(deployment) {
+	    steps {
+	    script {
+	        sh
+	    }
+	}
+    }
+}
+
+
+
+
+## git lab ci/cd multi cluster depoyment 
+
+stages:
+  - deploy
+
+
+deploy_cluster_1:
+  stage: deploy
+  script: 
+    - kubectl
+
+deploy_cluster@:
+  stage: deploy
+  script:
+     - kubectl -- context
